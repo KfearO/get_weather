@@ -10,6 +10,7 @@ good_location = Location("Giv‘atayim", "IL")
 city_with_hyphen_state_full_name = Location("Tel-Aviv", "Israel")
 city_only_location = Location("London")
 city_only_location_with_space = Location("New York")
+city_only_location_state_empty_string = Location("Madrid", "")
 city_with_special_char = Location("La Cañada Flintridge")
 units_metric = "metric"
 units_imperial = "imperial"
@@ -68,6 +69,11 @@ class TestGetWeather(unittest.TestCase):
 
     def test_city_only_with_special_char(self):
         (weather, location) = get_weather_api(location=city_with_special_char, appid=good_api_key)
+        self.assertEqual((type(weather), type(location)), (Weather, Location))
+        print_results(weather, location)
+
+    def test_city_only_location_state_empty_string(self):
+        (weather, location) = get_weather_api(location=city_only_location_state_empty_string, appid=good_api_key)
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
 
