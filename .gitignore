@@ -1,0 +1,5 @@
+venv/
+.idea/
+get_weather.log*
+my_config.json
+__pycache__
