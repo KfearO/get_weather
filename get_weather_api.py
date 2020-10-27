@@ -14,7 +14,8 @@ with open("config.json", "r") as c:
     log_file_name = config["log_parameters"]["log_file_name"]
     backup_logs = config["log_parameters"]["backup_logs"]
 
-log_format = logging.Formatter('%(asctime)s.%(msecs)03d|%(levelname)s|%(funcName)s()|%(message)s', '%d/%m/%Y %H:%M:%S')
+log_format = logging.Formatter('%(asctime)s.%(msecs)03d|%(levelname)s|%(threadName)s|%(funcName)s()|%(message)s',
+                               '%d/%m/%Y %H:%M:%S')
 log_handler = RotatingFileHandler(filename=os.path.join(log_file_path, log_file_name), mode='a',
                                   maxBytes=log_size_KB * 1024, backupCount=backup_logs, encoding='utf_8')
 log_handler.setFormatter(log_format)
