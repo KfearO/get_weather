@@ -7,7 +7,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 from cryptography.fernet import Fernet
 
-with open("config.json", "r") as c:
+with open("my_config.json", "r") as c:
     config = json.load(c)
     log_level = config["log_parameters"]["log_level"]
     log_size_KB = config["log_parameters"]["log_size_KB"]
