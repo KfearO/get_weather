@@ -5,6 +5,7 @@ import urllib.request
 import urllib.parse
 import logging
 from logging.handlers import RotatingFileHandler
+from cryptography.fernet import Fernet
 
 with open("config.json", "r") as c:
     config = json.load(c)
@@ -24,6 +25,13 @@ log_handler.setLevel(log_level)
 get_weather_logging = logging.getLogger('logger')
 get_weather_logging.setLevel(log_level)
 get_weather_logging.addHandler(log_handler)
+
+
+# This function is for encrypting 'appid' when writing the url to the log.
+# *** The key to decrypt isn't saved ***
+def encrypt_appid(url_values, api_url_partial):
+    url_values["appid"] = Fernet(Fernet.generate_key()).encrypt(url_values["appid"].encode())
+    return api_url_partial + urllib.parse.urlencode(url_values)
 
 
 def get_weather_api(location, appid, units="_metric"):
@@ -60,7 +68,7 @@ def get_weather_api(location, appid, units="_metric"):
     url_values = {
         "q": url_location_values,
         "units": units.lower(),
-        "appid": appid,
+        "appid": appid
     }
 
     url_values_encoded = urllib.parse.urlencode(url_values)
@@ -68,7 +76,8 @@ def get_weather_api(location, appid, units="_metric"):
 
     try:
         get_weather_logging.info("Request:")
-        get_weather_logging.debug(api_url)
+        get_weather_logging.debug(encrypt_appid(url_values, api_url_partial))    # Writing url to log - encrypted appid
+        # get_weather_logging.debug(api_url)    # Writing url to log - *** NOT encrypted appid ***
         json_weather_data = json.load(urllib.request.urlopen(api_url))
     except Exception as e:
         if e.__str__() == "HTTP Error 404: Not Found":
