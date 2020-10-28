@@ -2,7 +2,7 @@
   "log_parameters": {
     "log_level" : "DEBUG",
     "log_size_KB": 23,
-    "log_file_path": "D:\\Users\\Kfear\\PycharmProjects\\get_weather",
+    "log_file_path": "/var/log/get_weather/",
     "log_file_name" : "get_weather.log",
     "backup_logs" : 2
   },
