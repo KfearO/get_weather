@@ -7,7 +7,7 @@ The default returned values will be in 'metric' units if you don't provide it
 or 'imperial' units if you provide it at your function call.  
 2.  You must have an API key (appid), obtaining appid for free by registering to openweathermap.org  
 3.  The library contains a short demonstration program (get_current_weather.py) that shows the way to use it  
-4.  The library has a log that needs be configured, configuration file: 'config.json'  
+4.  The library has a log that needs be configured, configuration file: 'config.json' and renamed to 'my_config.json'  
   
 In the short demonstration program (get_current_weather.py):  
 1.  Notice the differences in each function call  
