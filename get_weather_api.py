@@ -1,4 +1,5 @@
 from get_weather_classes import *
+import tempfile
 import os.path
 import json
 import urllib.request
@@ -7,13 +8,23 @@ import logging
 from logging.handlers import RotatingFileHandler
 from cryptography.fernet import Fernet
 
-with open("my_config.json", "r") as c:
-    config = json.load(c)
-    log_level = config["log_parameters"]["log_level"]
-    log_size_KB = config["log_parameters"]["log_size_KB"]
-    log_file_path = config["log_parameters"]["log_file_path"]
-    log_file_name = config["log_parameters"]["log_file_name"]
-    backup_logs = config["log_parameters"]["backup_logs"]
+try:
+    with open("my_config", "r") as config_params:
+        config_json = json.load(config_params)
+    log_level = config_json["log_parameters"]["log_level"]
+    log_size_KB = config_json["log_parameters"]["log_size_KB"]
+    log_file_path = config_json["log_parameters"]["log_file_path"]
+    log_file_name = config_json["log_parameters"]["log_file_name"]
+    backup_logs = config_json["log_parameters"]["backup_logs"]
+except FileNotFoundError or KeyError as err:
+    if err is KeyError:
+        raise err
+    log_level = "INFO"
+    log_size_KB = 23
+    log_file_path = tempfile.gettempdir()
+    log_file_name = "temp_get_weather.log"
+    backup_logs = 9
+
 
 log_format = logging.Formatter('%(asctime)s.%(msecs)03d|%(levelname)s|%(threadName)s|%(funcName)s()|%(message)s',
                                '%d/%m/%Y %H:%M:%S')
