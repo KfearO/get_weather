@@ -73,7 +73,7 @@ class Weather:
         air_pressure_unit = " hPa, "
         wind_direction_unit = " deg. "
         cloud_cover_unit = " %, "
-        precipitations = " mm/h"
+        precipitations_unit = " mm/h"
 
         return \
             "Temperature: " + str(self.air_temperature) + air_temperature_unit + \
@@ -82,7 +82,7 @@ class Weather:
             "Wind Speed: " + str(self.wind_speed) + wind_speed_unit + \
             "Wind Direction: " + str(self.wind_direction) + wind_direction_unit + \
             "Cloud Cover: " + str(self.cloud_cover) + cloud_cover_unit + \
-            "Precipitations: " + str(self.precipitations) + precipitations
+            "Precipitations: " + str(self.precipitations) + precipitations_unit
 
     def __add__(self, other):
         return str(self) + str(other)

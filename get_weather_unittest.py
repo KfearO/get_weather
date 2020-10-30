@@ -1,9 +1,13 @@
 import unittest
 import json
+import os
 from get_weather_classes import *
 from get_weather_api import get_weather_api
 
-with open("my_config.json", "r") as c:
+config_file = "my_config.json"
+test_config_file = "not_my_config.json"
+
+with open(config_file, "r") as c:
     good_api_key = json.load(c)["application_parameters"]["api_key"]
 
 good_location_no_units = Location("Giv‘atayim", "IL")
@@ -29,7 +33,7 @@ unauthorised_api_key = "NoSuchApiKey"
 def print_results(weather, location):
     print("Expected: ", Weather, Location)
     print("Got:      ", type(weather), type(location))
-    print(location + "\n" + weather)
+    print(location + "\n" + weather.string_with_units(location.units))
 
 
 class TestGetWeather(unittest.TestCase):
@@ -82,6 +86,13 @@ class TestGetWeather(unittest.TestCase):
         (weather, location) = get_weather_api(location=city_only_location_state_empty_string, appid=good_api_key)
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
+
+    def test_no_config_json(self):
+        os.rename(config_file, test_config_file)
+        (weather, location) = get_weather_api(location=city_only_location_state_empty_string, appid=good_api_key)
+        self.assertEqual((type(weather), type(location)), (Weather, Location))
+        print_results(weather, location)
+        os.rename(test_config_file, config_file)
 
     def test_incorrect_type_location(self):
         with self.assertRaises(GetWeatherException):

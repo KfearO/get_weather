@@ -92,8 +92,8 @@ def get_weather_api(location, appid):
 
     try:
         get_weather_logging.info("Request:")
-        # get_weather_logging.debug(encrypt_appid(url_values, api_url_partial))  # Writing url to log - encrypted appid
-        get_weather_logging.debug(api_url)  # Writing url to log - *** NOT encrypted appid ***
+        get_weather_logging.debug(encrypt_appid(url_values, api_url_partial))  # Writing url to log - encrypted appid
+        # get_weather_logging.debug(api_url)  # Writing url to log - *** NOT encrypted appid ***
         json_weather_data = json.load(urllib.request.urlopen(api_url))
     except Exception as e:
         if e.__str__() == "HTTP Error 404: Not Found":
@@ -128,9 +128,10 @@ def get_weather_api(location, appid):
     try:
         if location.state is None:
             location = Location(location.city, "(" + str(json_weather_data["sys"]["country"]) + ")", location.units)
-            get_weather_logging.warning("City is located at: " + str(location.state) + " according to json")
+            get_weather_logging.warning("City is located at: " + str(location.state)
+                                        + " according to 'openweathermap.org' response")
     except KeyError as e:
-        get_weather_logging.warning("Failed to locate city State from json" + e.__str__())
+        get_weather_logging.warning("Failed to locate State from 'openweathermap.org' response" + e.__str__())
         location = Location(location.city, "(** Unknown State **)")
 
     get_weather_logging.debug(msg="\n" + Weather(raw_humidity, raw_temperature, raw_pressure, raw_wind_speed,
