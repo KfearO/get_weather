@@ -45,7 +45,7 @@ def encrypt_appid(url_values, api_url_partial):
     return api_url_partial + urllib.parse.urlencode(url_values)
 
 
-def get_weather_api(location, appid, units="_metric"):
+def get_weather_api(location, appid):
     get_weather_logging.info("----- Start " + str(log_level) + " -----")
     if type(location) is not Location:
         e = GetWeatherException(11, "Location type is mandatory")
@@ -61,14 +61,19 @@ def get_weather_api(location, appid, units="_metric"):
         e = GetWeatherException(13, "appid is mandatory")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
-    if units == "_metric" or units == "" or units is None:
-        get_weather_logging.info("units parameter is not defined, using 'metric' as default")
-        units = "metric"
+
+    if location.units == "" or location.units is None:
+        get_weather_logging.info("units parameter is not defined, returned temperature would be in 'kelvin', "
+                                 "wind speed in metric")
+        url_units = "kelvin"
+    elif location.units.lower() != "imperial" and location.units.lower() != "metric" \
+            and location.units.lower() != "kelvin":
+        e = GetWeatherException(14, "units parameter can only be 'metric', 'imperial', 'kelvin' or 'None', got: '"
+                                    + str(location.units) + "'")
+        get_weather_logging.critical("exception:", exc_info=e)
+        raise e
     else:
-        if units.lower() != "imperial" and units.lower() != "metric":
-            e = GetWeatherException(14, "units parameter can only be 'metric' or 'imperial', got: '" + str(units) + "'")
-            get_weather_logging.critical("exception:", exc_info=e)
-            raise e
+        url_units = location.units.lower()
 
     api_url_partial = "https://api.openweathermap.org/data/2.5/weather?"
 
@@ -78,7 +83,7 @@ def get_weather_api(location, appid, units="_metric"):
 
     url_values = {
         "q": url_location_values,
-        "units": units.lower(),
+        "units": url_units.lower(),
         "appid": appid
     }
 
@@ -87,8 +92,8 @@ def get_weather_api(location, appid, units="_metric"):
 
     try:
         get_weather_logging.info("Request:")
-        get_weather_logging.debug(encrypt_appid(url_values, api_url_partial))    # Writing url to log - encrypted appid
-        # get_weather_logging.debug(api_url)    # Writing url to log - *** NOT encrypted appid ***
+        # get_weather_logging.debug(encrypt_appid(url_values, api_url_partial))  # Writing url to log - encrypted appid
+        get_weather_logging.debug(api_url)  # Writing url to log - *** NOT encrypted appid ***
         json_weather_data = json.load(urllib.request.urlopen(api_url))
     except Exception as e:
         if e.__str__() == "HTTP Error 404: Not Found":
@@ -122,7 +127,7 @@ def get_weather_api(location, appid, units="_metric"):
 
     try:
         if location.state is None:
-            location = Location(location.city, "(" + str(json_weather_data["sys"]["country"]) + ")")
+            location = Location(location.city, "(" + str(json_weather_data["sys"]["country"]) + ")", location.units)
             get_weather_logging.warning("City is located at: " + str(location.state) + " according to json")
     except KeyError as e:
         get_weather_logging.warning("Failed to locate city State from json" + e.__str__())

@@ -14,9 +14,10 @@ class GetWeatherException(Exception):
 
 
 class Location:
-    def __init__(self, city, state=None):
+    def __init__(self, city, state=None, units=None):
         self.city = city
         self.state = state
+        self.units = units
 
     def __str__(self):
         if self.state is None:
@@ -53,20 +54,23 @@ class Weather:
             "Precipitations: " + str(self.precipitations)
 
     def string_with_units(self, units=None):
-        if units is None:
+        if units is None or units == "":
             return self.__str__()
 
-        if units.lower() == "metric":
+        if units.lower() == "kelvin":
+            air_temperature_unit = " K, "
+            wind_speed_unit = " Meters/Seconds, "
+        elif units.lower() == "metric":
             air_temperature_unit = " C, "
             wind_speed_unit = " Meters/Seconds, "
         elif units.lower() == "imperial":
             air_temperature_unit = " F, "
             wind_speed_unit = " Miles/Hour, "
         else:
-            raise GetWeatherException(21, "units can be either 'metric' or 'imperial'")
+            raise GetWeatherException(21, "units can be either 'metric', 'imperial' or 'kelvin'")
 
         humidity_unit = " %, "
-        air_pressure_unit = " mb, "
+        air_pressure_unit = " hPa, "
         wind_direction_unit = " deg. "
         cloud_cover_unit = " %, "
         precipitations = " mm/h"
