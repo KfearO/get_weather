@@ -16,7 +16,9 @@ try:
     log_file_path = config_json["log_parameters"]["log_file_path"]
     log_file_name = config_json["log_parameters"]["log_file_name"]
     backup_logs = config_json["log_parameters"]["backup_logs"]
-except FileNotFoundError or KeyError as err:
+    if not os.path.isdir(log_file_path):
+        raise GetWeatherException(10, "No such directory: '" + log_file_path + "' check your config file")
+except FileNotFoundError or KeyError or False as err:
     if err is KeyError:
         raise err
     log_level = "INFO"
