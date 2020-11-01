@@ -63,7 +63,7 @@ def get_weather_api(location, appid):
 
     if location.units == "" or location.units is None:
         get_weather_logging.info("units parameter is not defined, returned temperature would be in 'kelvin', "
-                                 "wind speed in metric")
+                                 "wind speed in a metric unit")
         url_units = "kelvin"
     elif location.units.lower() != "imperial" and location.units.lower() != "metric" \
             and location.units.lower() != "kelvin":
