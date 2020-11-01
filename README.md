@@ -16,4 +16,4 @@ Or change the program to call the 'config.json' file
 
 ## Be advised:  
 **The library is provided as-is**  
-**Because the library is using 'openweathermap.org' API I have no obligations and/or responsibility regarding accuracy of the weather data that will be returned and/or provided.**  
+**I have no obligations and/or responsibility regarding accuracy of the weather data that will be returned and/or provided.**  

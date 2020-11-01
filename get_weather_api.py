@@ -25,7 +25,6 @@ except FileNotFoundError or KeyError as err:
     log_file_name = "temp_get_weather.log"
     backup_logs = 9
 
-
 log_format = logging.Formatter('%(asctime)s.%(msecs)03d|%(levelname)s|%(threadName)s|%(funcName)s()|%(message)s',
                                '%d/%m/%Y %H:%M:%S')
 log_handler = RotatingFileHandler(filename=os.path.join(log_file_path, log_file_name), mode='a',
@@ -69,7 +68,7 @@ def get_weather_api(location, appid):
     elif location.units.lower() != "imperial" and location.units.lower() != "metric" \
             and location.units.lower() != "kelvin":
         e = GetWeatherException(14, "units parameter can only be 'metric', 'imperial', 'kelvin' or 'None', got: '"
-                                    + str(location.units) + "'")
+                                + str(location.units) + "'")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
     else:

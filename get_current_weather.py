@@ -24,9 +24,9 @@ if __name__ == "__main__":
         api_key = json.load(c)["application_parameters"]["api_key"]
 
     check_locations_list = [
-        [Location("Tel-Aviv", "IL"), api_key],
-        [Location("Tel-Aviv", "IL", "metric"), api_key],
-        [Location("Tel-Aviv", "IL", "imperial"), api_key],
+        [Location("Giv‘atayim", "IL", "metric"), api_key],
+        [Location("Tel-Aviv", "", "imperial"), api_key],
+        [Location("Belfast"), api_key],
         [Location("Clear Creek", units="imperial"), api_key],
         [Location("Clear Creek", "CA", "imperial"), api_key],
         [Location("London", "Great Britain"), api_key],
