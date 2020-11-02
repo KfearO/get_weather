@@ -1,0 +1,12 @@
+{
+  "log_parameters": {
+    "log_level" : "DEBUG",
+    "log_size_KB": 23,
+    "log_file_path": "no/such/path",
+    "log_file_name" : "get_weather.log",
+    "backup_logs" : 2
+  },
+  "application_parameters": {
+    "api_key": "b76f0912e6723d7c06867210a80a407b"
+  }
+}

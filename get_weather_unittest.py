@@ -1,8 +1,6 @@
 import unittest
-import json
-import os
-from get_weather_classes import *
-from get_weather_api import get_weather_api
+from get_weather_api import *
+
 
 config_file = "my_config.json"
 test_config_file = "not_my_config.json"
@@ -89,43 +87,61 @@ class TestGetWeather(unittest.TestCase):
         print_results(weather, location)
 
     def test_no_config_json(self):
-        os.rename(config_file, test_config_file)
-        (weather, location) = get_weather_api(location=city_only_location_state_empty_string, appid=good_api_key)
+        test_logger = get_weather_logger("no.such_file")
+        (weather, location) = get_weather_api(location=city_only_location_state_empty_string, appid=good_api_key,
+                                              logger=test_logger)
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
-        os.rename(test_config_file, config_file)
+
+    def test_incorrect_log_file_path_in_jason(self):
+        with self.assertRaises(GetWeatherException) as e:
+            get_weather_logger("incorrect_log_file_path.json")
+        print(e.exception.__str__())
+
+    def test_bad_key_in_jason(self):
+        with self.assertRaises(GetWeatherException) as e:
+            get_weather_logger("bad_key.json")
+        print(e.exception.__str__())
 
     def test_incorrect_type_location(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=incorrect_type_location, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_city_empty_string_location(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=city_empty_string_location, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_city_none_location(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=city_none_location, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_incorrect_state(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=city_with_incorrect_state, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_empty_api_key(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=good_location_and_units, appid=empty_string_api_key)
+        print(e.exception.__str__())
 
     def test_units_wrong(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=good_location_units_wrong, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_unknown_location(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=city_with_equal_char, appid=good_api_key)
+        print(e.exception.__str__())
 
     def test_unauthorised_api_key(self):
-        with self.assertRaises(GetWeatherException):
+        with self.assertRaises(GetWeatherException) as e:
             get_weather_api(location=good_location_units_none, appid=unauthorised_api_key)
+        print(e.exception.__str__())
 
 
 if __name__ == '__main__':
