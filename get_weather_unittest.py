@@ -143,6 +143,12 @@ class TestGetWeather(unittest.TestCase):
             get_weather_api(location=good_location_units_none, appid=unauthorised_api_key)
         print(e.exception.__str__())
 
+    def test_Location_string_with_wrong_units(self):
+        (weather, location) = get_weather_api(location=good_location_and_units, appid=good_api_key)
+        with self.assertRaises(GetWeatherException) as e:
+            weather.string_with_units(units="incorrect_units")
+        print(e.exception.__str__())
+
 
 if __name__ == '__main__':
     unittest.main()
