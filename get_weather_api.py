@@ -52,8 +52,8 @@ def get_weather_api(location, appid):
         e = GetWeatherException(11, "Location type is mandatory")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
-    if location.city == "":
-        e = GetWeatherException(12, "city is mandatory. got empty string")
+    if location.city == "" or location.city is None:
+        e = GetWeatherException(12, "city is mandatory. got None or empty string")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
     if location.state == "":

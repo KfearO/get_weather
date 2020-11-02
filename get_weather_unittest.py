@@ -11,8 +11,8 @@ with open(config_file, "r") as c:
     good_api_key = json.load(c)["application_parameters"]["api_key"]
 
 good_location_and_units = Location("Giv‘atayim", "IL", "Metric")
-good_location_units_metric = Location("Berlin", "DE", "imperial")
-good_location_units_imperial = Location("mexico city", "mexico")
+good_location_units_none = Location("Berlin", "DE")
+good_location_units_imperial = Location("mexico city", "mexico", "Imperial")
 good_location_units_kelvin = Location("Rome", "Italy", "KELVIN")
 good_location_units_empty_string = Location("sydney", "aus", "")
 city_with_hyphen_state_full_name = Location("Tel-Aviv", "Israel")
@@ -24,6 +24,7 @@ city_with_special_char = Location("La Cañada Flintridge")
 good_location_units_wrong = Location("Canberra", "au", "metrical")
 incorrect_type_location = "Munich"
 city_empty_string_location = Location("", "US")
+city_none_location = Location(city=None, state="RU")
 city_with_incorrect_state = Location("Paris", "IL")
 empty_string_api_key = ""
 city_with_equal_char = Location("Tel=Aviv", "IL")
@@ -42,8 +43,8 @@ class TestGetWeather(unittest.TestCase):
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
 
-    def test_units_metric(self):
-        (weather, location) = get_weather_api(location=good_location_units_metric, appid=good_api_key)
+    def test_units_none(self):
+        (weather, location) = get_weather_api(location=good_location_units_none, appid=good_api_key)
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
 
@@ -102,6 +103,10 @@ class TestGetWeather(unittest.TestCase):
         with self.assertRaises(GetWeatherException):
             get_weather_api(location=city_empty_string_location, appid=good_api_key)
 
+    def test_city_none_location(self):
+        with self.assertRaises(GetWeatherException):
+            get_weather_api(location=city_none_location, appid=good_api_key)
+
     def test_incorrect_state(self):
         with self.assertRaises(GetWeatherException):
             get_weather_api(location=city_with_incorrect_state, appid=good_api_key)
@@ -120,7 +125,7 @@ class TestGetWeather(unittest.TestCase):
 
     def test_unauthorised_api_key(self):
         with self.assertRaises(GetWeatherException):
-            get_weather_api(location=city_with_equal_char, appid=unauthorised_api_key)
+            get_weather_api(location=good_location_units_none, appid=unauthorised_api_key)
 
 
 if __name__ == '__main__':
