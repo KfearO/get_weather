@@ -10,9 +10,9 @@ test_config_file = "not_my_config.json"
 with open(config_file, "r") as c:
     good_api_key = json.load(c)["application_parameters"]["api_key"]
 
-good_location_no_units = Location("Giv‘atayim", "IL")
-good_location_units_metric = Location("Berlin", "DE", "Metric")
-good_location_units_imperial = Location("mexico city", "mexico", "imperial")
+good_location_and_units = Location("Giv‘atayim", "IL", "Metric")
+good_location_units_metric = Location("Berlin", "DE", "imperial")
+good_location_units_imperial = Location("mexico city", "mexico")
 good_location_units_kelvin = Location("Rome", "Italy", "KELVIN")
 good_location_units_empty_string = Location("sydney", "aus", "")
 city_with_hyphen_state_full_name = Location("Tel-Aviv", "Israel")
@@ -37,8 +37,8 @@ def print_results(weather, location):
 
 
 class TestGetWeather(unittest.TestCase):
-    def test_all_positive_units_none(self):
-        (weather, location) = get_weather_api(location=good_location_no_units, appid=good_api_key)
+    def test_all_positive(self):
+        (weather, location) = get_weather_api(location=good_location_and_units, appid=good_api_key)
         self.assertEqual((type(weather), type(location)), (Weather, Location))
         print_results(weather, location)
 
@@ -108,7 +108,7 @@ class TestGetWeather(unittest.TestCase):
 
     def test_empty_api_key(self):
         with self.assertRaises(GetWeatherException):
-            get_weather_api(location=good_location_no_units, appid=empty_string_api_key)
+            get_weather_api(location=good_location_and_units, appid=empty_string_api_key)
 
     def test_units_wrong(self):
         with self.assertRaises(GetWeatherException):

@@ -5,9 +5,9 @@ import concurrent.futures
 
 """
 A Short demonstration program to showcase how to use the get_weather_api()
-Notice the differences in each function call
+Notice the differences in check_locations_list
 Also pay attention to the 'my_config.json' reading, which is a private file,
-a public demo file exist in the project - 'config.json' 
+a public demo file exist in the project - 'config.json' - config and rename it or create your own file 
 """
 
 
