@@ -1,12 +1,21 @@
 {
-  "log_parameters": {
+  "log_parameters" : {
     "log_level" : "DEBUG",
-    "log_size_KB": 23,
-    "log_file_path": "/var/log/get_weather/",
+    "log_size_KB" : 23,
+    "log_file_path" : "/var/log/get_weather/",
     "log_file_name" : "get_weather.log",
     "backup_logs" : 2
   },
   "application_parameters": {
-    "api_key": "REPLACE THIS STRING WITH YOUR PRIVATE API KEY"
+    "api_key": "REPLACE THIS STRING WITH YOUR PRIVATE API KEY",
+    "weather_json_keys": {
+      "humidity" : ["main", "humidity"],
+      "temperature" : ["main", "temp"],
+      "pressure" : ["main", "pressure"],
+      "wind_speed" : ["wind", "speed"],
+      "wind_direction" : ["wind", "deg"],
+      "cloud_cover" : ["clouds", "all"],
+      "precipitation" : ["rain", "1h"]
+    }
   }
 }
