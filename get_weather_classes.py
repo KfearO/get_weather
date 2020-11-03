@@ -71,7 +71,7 @@ class Weather:
 
         humidity_unit = " %, "
         air_pressure_unit = " hPa, "
-        wind_direction_unit = " deg. "
+        wind_direction_unit = " deg., "
         cloud_cover_unit = " %, "
         precipitations_unit = " mm/h"
 

@@ -39,6 +39,12 @@ if __name__ == "__main__":
     for weather_results in threading_results:
         try:
             result_current_weather, result_location = weather_results.result()
-            print(result_location + "\n" + result_current_weather.string_with_units(result_location.units) + "\n")
+            weather_to_print = result_current_weather.string_with_units(result_location.units).replace(", ", "\n")
+            if result_location.units is not None:
+                units_to_print = "(" + str(result_location.units) + ")"
+            else:
+                units_to_print = ""
+            print(result_location + " " + units_to_print + "\n" + "-----------------------\n" + weather_to_print + "\n")
+            del units_to_print
         except GetWeatherException as e:
             print(e + "\n")
