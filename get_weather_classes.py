@@ -89,3 +89,11 @@ class Weather:
 
     def __radd__(self, other):
         return str(other) + str(self)
+
+
+class DynamicWeather:
+    def __init__(self, **kwargs):
+        if kwargs is dict:
+            self.attributes = kwargs
+        else:
+            raise GetWeatherException(41, "Not a dictionary object")
