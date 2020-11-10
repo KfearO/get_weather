@@ -20,9 +20,10 @@ def run_get_weather_api(locations_list):
 
 
 if __name__ == "__main__":
-    with open("my_config.json", "r") as c:
+    with open("../my_config.json", "r") as c:
         api_key = json.load(c)["application_parameters"]["api_key"]
 
+    """
     check_locations_list = [
         [Location("Giv‘atayim", "IL", "metric"), api_key],
         [Location("Tel-Aviv", "", "imperial"), api_key],
@@ -33,6 +34,18 @@ if __name__ == "__main__":
         [Location("paris", "fr", "kelvin"), api_key],
         [Location("Canberra", "AUS"), api_key]
                        ]
+    """
+
+    with open("locations_demo.json", encoding='utf-8') as locations_list_file:
+        locations_list_json = json.load(locations_list_file)
+
+    check_locations_list = []
+    for location in locations_list_json["Locations"]:
+        items = []
+        for item in locations_list_json["Locations"][location]:
+            items.append(locations_list_json["Locations"][location][item])
+        location_item = Location(city=items[0], state=items[1], units=items[2])
+        check_locations_list.append([location_item, api_key])
 
     threading_results = run_get_weather_api(check_locations_list)
     concurrent.futures.wait(threading_results)

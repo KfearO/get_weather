@@ -25,6 +25,9 @@ class Location:
         else:
             return str(self.city + ", " + self.state)
 
+    def string_with_units(self):
+        return self.__str__() + ", " + self.units
+
     def __add__(self, other):
         return str(self) + str(other)
 

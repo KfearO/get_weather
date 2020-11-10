@@ -1,0 +1,14 @@
+{
+    "Locations":{
+        "location-01": {
+            "city": "Giv‘atayim",
+            "state": "IL",
+            "units": "metric"
+        },
+        "location-02": {
+            "city": "Tel-Aviv",
+            "state": "",
+            "units": "Imperial"
+        }
+    }
+}
