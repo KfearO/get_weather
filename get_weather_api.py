@@ -130,11 +130,19 @@ def get_weather_api(location, appid, logger=None):
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
 
+    raw_precipitations_type = None
     try:
-        raw_precipitation = json_weather_data["rain"]["1h"]
+        raw_precipitation_snow = json_weather_data["snow"]["1h"]
     except KeyError:
-        get_weather_logging.warning("json has no precipitation data, setting 'raw_precipitation = \"(0)\"'")
-        raw_precipitation = "(0)"
+        try:
+            raw_precipitation = json_weather_data["rain"]["1h"]
+            raw_precipitations_type = "rain"
+        except KeyError:
+            get_weather_logging.warning("json has no precipitation data, setting 'raw_precipitation = \"(0)\"'")
+            raw_precipitation = "(0)"
+    else:
+        raw_precipitation = raw_precipitation_snow
+        raw_precipitations_type = "snow"
 
     try:
         if location.state is None:
@@ -150,4 +158,4 @@ def get_weather_api(location, appid, logger=None):
 
     get_weather_logging.info("----- End -----")
     return Weather(raw_humidity, raw_temperature, raw_pressure, raw_wind_speed,
-                   raw_wind_direction, raw_cloud_cover, raw_precipitation), location
+                   raw_wind_direction, raw_cloud_cover, raw_precipitation, raw_precipitations_type), location

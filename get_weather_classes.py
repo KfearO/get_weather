@@ -37,7 +37,7 @@ class Location:
 
 class Weather:
     def __init__(self, humidity, air_temperature, air_pressure,
-                 wind_speed, wind_direction, cloud_cover, precipitations):
+                 wind_speed, wind_direction, cloud_cover, precipitations, precipitations_type=None):
         self.humidity = humidity
         self.air_temperature = air_temperature
         self.air_pressure = air_pressure
@@ -45,6 +45,7 @@ class Weather:
         self.wind_direction = wind_direction
         self.cloud_cover = cloud_cover
         self.precipitations = precipitations
+        self.precipitations_type = precipitations_type
 
     def __str__(self):
         return \
@@ -76,7 +77,10 @@ class Weather:
         air_pressure_unit = " hPa, "
         wind_direction_unit = " deg., "
         cloud_cover_unit = " %, "
-        precipitations_unit = " mm/h"
+        if self.precipitations_type == "rain" or self.precipitations_type == "snow":
+            precipitations_unit = " mm/h " + self.precipitations_type
+        else:
+            precipitations_unit = " mm/h"
 
         return \
             "Temperature: " + str(self.air_temperature) + air_temperature_unit + \
