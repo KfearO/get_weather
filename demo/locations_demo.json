@@ -9,6 +9,11 @@
             "city": "Tel-Aviv",
             "state": "",
             "units": "Imperial"
+        },
+        "location-03": {
+            "city": "Belfast",
+            "state": "",
+            "units": ""
         }
     }
 }
