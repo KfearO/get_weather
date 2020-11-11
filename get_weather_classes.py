@@ -71,7 +71,7 @@ class Weather:
             air_temperature_unit = " F, "
             wind_speed_unit = " Miles/Hour, "
         else:
-            raise GetWeatherException(21, "units can be either 'metric', 'imperial' or 'kelvin'")
+            raise GetWeatherException(11, "units can be either 'metric', 'imperial' or 'kelvin'")
 
         humidity_unit = " %, "
         air_pressure_unit = " hPa, "
@@ -103,4 +103,4 @@ class DynamicWeather:
         if kwargs is dict:
             self.attributes = kwargs
         else:
-            raise GetWeatherException(41, "Not a dictionary object")
+            raise GetWeatherException(51, "Not a dictionary object")

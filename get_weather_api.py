@@ -26,9 +26,9 @@ def get_weather_logger(logger_config_file="my_config.json"):
         log_file_name = config_json["log_parameters"]["log_file_name"]
         backup_logs = config_json["log_parameters"]["backup_logs"]
         if not os.path.isdir(log_file_path):
-            raise GetWeatherException(10, "No such directory: '" + log_file_path + "' check your config file")
+            raise GetWeatherException(31, "No such directory: '" + log_file_path + "' check your config file")
     except KeyError as err:
-        raise GetWeatherException(31, "Bad key: " + err.__str__() + " in config file: '" + logger_config_file + "'")
+        raise GetWeatherException(32, "Missing key: " + err.__str__() + " in config file: '" + logger_config_file + "'")
     except FileNotFoundError:
         log_level = "INFO"
         log_size_kb = 23
@@ -59,17 +59,17 @@ def get_weather_api(location, appid, logger=None):
         get_weather_logging = logger
     get_weather_logging.info("----- Start " + str("log_level") + " -----")
     if type(location) is not Location:
-        e = GetWeatherException(11, "Location type is mandatory")
+        e = GetWeatherException(21, "Location type is mandatory")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
     if location.city == "" or location.city is None:
-        e = GetWeatherException(12, "city is mandatory. got None or empty string")
+        e = GetWeatherException(22, "city is mandatory. got None or empty string")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
     if location.state == "":
         location.state = None
     if appid is None or appid == "":
-        e = GetWeatherException(13, "appid is mandatory")
+        e = GetWeatherException(23, "appid is mandatory")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
 
@@ -79,7 +79,7 @@ def get_weather_api(location, appid, logger=None):
         url_units = "kelvin"
     elif location.units.lower() != "imperial" and location.units.lower() != "metric" \
             and location.units.lower() != "kelvin":
-        e = GetWeatherException(14, "units parameter can only be 'metric', 'imperial', 'kelvin' or 'None', got: '"
+        e = GetWeatherException(24, "units parameter can only be 'metric', 'imperial', 'kelvin' or 'None', got: '"
                                 + str(location.units) + "'")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
@@ -111,7 +111,7 @@ def get_weather_api(location, appid, logger=None):
             error_message = "No such location: '" + str(location) + "' or wrong API call"
         else:
             error_message = "Something went wrong: " + e.__str__()
-        e = GetWeatherException(15, error_message)
+        e = GetWeatherException(25, error_message)
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
 
@@ -126,7 +126,7 @@ def get_weather_api(location, appid, logger=None):
         raw_wind_direction = json_weather_data["wind"]["deg"]
         raw_cloud_cover = json_weather_data["clouds"]["all"]
     except KeyError as e:
-        e = GetWeatherException(15, "Failed to parse data: " + e.__str__() + " no such key")
+        e = GetWeatherException(26, "Failed to parse data: " + e.__str__() + " no such key")
         get_weather_logging.critical("exception:", exc_info=e)
         raise e
 

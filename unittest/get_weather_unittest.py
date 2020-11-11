@@ -2,7 +2,7 @@ import unittest
 from get_weather_api import *
 
 
-config_file = "../my_config.json"
+config_file = "my_config.json"
 test_config_file = "not_my_config.json"
 
 with open(config_file, "r") as c:
