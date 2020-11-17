@@ -1,7 +1,7 @@
 # get_weather
 
 A Python3 (3.9) library for obtaining the current weather in a particular location.
-* The library returns a 'weather object' (rather then a json data)
+* The library returns a 'weather object' (rather then json data)
 1.  The library is using 'openweathermap.org' API to obtain the current weather in a particular location  
 Location is constructed out of one (at least city) or two (city, state) parameters  
 The default returned temperature will be in 'kelvin' if you don't provide it  
