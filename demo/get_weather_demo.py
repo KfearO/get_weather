@@ -20,7 +20,7 @@ def run_get_weather_api(locations_list):
 
 
 if __name__ == "__main__":
-    with open("../my_config.json", "r") as c:
+    with open("my_config.json", "r") as c:
         api_key = json.load(c)["application_parameters"]["api_key"]
 
     """
