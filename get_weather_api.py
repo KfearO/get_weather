@@ -57,7 +57,8 @@ def get_weather_api(location, appid, logger=None):
         global get_weather_logging
     else:
         get_weather_logging = logger
-    get_weather_logging.info("----- Start " + str("log_level") + " -----")
+    get_weather_logging.info("----- Start " +
+                             logging.getLevelName(get_weather_logging.getEffectiveLevel()) + " -----")
     if type(location) is not Location:
         e = GetWeatherException(21, "Location type is mandatory")
         get_weather_logging.critical("exception:", exc_info=e)
