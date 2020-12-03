@@ -6,14 +6,24 @@
             "units": "metric"
         },
         "location-02": {
-            "city": "Red Oak",
-            "state": "US",
-            "units": "Imperial"
+            "city": "Tel Aviv",
+            "state": "",
+            "units": "Metric"
         },
         "location-03": {
             "city": "Belfast",
             "state": "",
             "units": ""
+        },
+        "location-04": {
+            "city": "Albertson",
+            "state": "New York",
+            "units": "Metric"
+        },
+        "location-05": {
+            "city": "Miami",
+            "state": "USA",
+            "units": "Imperial"
         }
     }
 }
