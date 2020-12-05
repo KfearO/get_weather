@@ -117,7 +117,7 @@ def get_weather_api(location, appid, logger=None):
         raise e
 
     get_weather_logging.info("Response:")
-    get_weather_logging.debug(str(json_weather_data).encode(errors="ignore"))
+    get_weather_logging.debug(str(json_weather_data))
 
     try:
         raw_humidity = json_weather_data["main"]["humidity"]
