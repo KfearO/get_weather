@@ -146,10 +146,17 @@ def get_weather_api(location, appid, logger=None):
         raw_precipitations_type = "snow"
 
     try:
+        location_state = json_weather_data["sys"]["country"]
         if location.state is None:
             location = Location(location.city, "(" + str(json_weather_data["sys"]["country"]) + ")", location.units)
             get_weather_logging.warning("City is located at: " + str(location.state)
                                         + " according to 'openweathermap.org' response")
+        elif location_state != location.state:
+            e = GetWeatherException(27, "City is located at a different State then requested, requested: '"
+                                    + str(location.state) + "' replied: '" + str(location_state) + "'")
+            get_weather_logging.critical(e)
+            raise e
+
     except KeyError as e:
         get_weather_logging.warning("Failed to locate State from 'openweathermap.org' response" + e.__str__())
         location = Location(location.city, "(** Unknown State **)")
