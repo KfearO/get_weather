@@ -17,12 +17,12 @@
         },
         "location-04": {
             "city": "Albertson",
-            "state": "New York",
+            "state": "US",
             "units": "Metric"
         },
         "location-05": {
             "city": "Paris",
-            "state": "US",
+            "state": "USA",
             "units": "Imperial"
         }
     }
