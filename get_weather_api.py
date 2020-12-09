@@ -151,7 +151,7 @@ def get_weather_api(location, appid, logger=None):
             location = Location(location.city, "(" + str(json_weather_data["sys"]["country"]) + ")", location.units)
             get_weather_logging.warning("City is located at: " + str(location.state)
                                         + " according to 'openweathermap.org' response")
-        elif location_state != location.state:
+        elif str(location_state).upper() != str(location.state).upper():
             e = GetWeatherException(27, "City is located at a different State then requested, "
                                         "requested: '" + str(location.city) + ", " + str(location.state)
                                     + "' replied: '" + str(location.city) + ", " + str(location_state) + "'")
