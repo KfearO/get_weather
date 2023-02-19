@@ -1,6 +1,8 @@
 # get_weather
 
-A Python3 (3.9) library for obtaining the current weather in a particular location.  
+A demonstration project
+
+Python3 (3.9) library for obtaining the current weather in a particular location.  
 
 
 1.  The library is using 'openweathermap.org' API to obtain the current weather in a particular location  
