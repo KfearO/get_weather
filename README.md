@@ -1,6 +1,6 @@
 # get_weather
 
-> ## Demo project
+> ## A working (Demo) project
 
 ### Python3 (3.9) library for obtaining the current weather in a particular location.  
 
