@@ -12,9 +12,9 @@
 2. Location is constructed out of one (at least city) or two (city, state) parameters  
 3. The default returned temperature will be in 'kelvin' if you don't provide it  
 or 'metric' or 'imperial' units if you provide it at your function call.  
-2.  You must have an API key (appid). Obtaining appid by registering to openweathermap.org.  
-3.  The library has a log that needs be configured, configuration file: 'config.json' rename it to 'my_config.json'.  
-4.  The library contains a demonstration program (get_weather_demo.py) that shows the way to use it.  
+4.  You must have an API key (appid). Obtaining appid by registering to openweathermap.org.  
+5.  The library has a log that needs be configured, configuration file: 'config.json' rename it to 'my_config.json'.  
+6.  The library contains a demonstration program (get_weather_demo.py) that shows the way to use it.  
   
 In the demonstration program (get_weather_demo.py):  
 1.  Notice the differences in each Location object, you can learn the possibilities.  
