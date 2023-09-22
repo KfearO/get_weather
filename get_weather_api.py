@@ -7,6 +7,7 @@ import json
 import logging
 from logging.handlers import RotatingFileHandler
 from cryptography.fernet import Fernet
+from pathlib import Path
 
 
 # This function is for encrypting 'appid' when writing the url to the log.
@@ -29,12 +30,14 @@ def get_weather_logger(logger_config_file="my_config.json"):
             raise GetWeatherException(31, "No such directory: '" + log_file_path + "' check your config file")
     except KeyError as err:
         raise GetWeatherException(32, "Missing key: " + err.__str__() + " in config file: '" + logger_config_file + "'")
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         log_level = "INFO"
         log_size_kb = 23
         log_file_path = tempfile.gettempdir()
         log_file_name = "temp_get_weather.log"
         backup_logs = 9
+        print("Warning: log config file is missing: " + e.__str__() + " creating log file at default temp path: " +
+              Path(log_file_path, log_file_name).__str__())
 
     log_format = logging.Formatter('%(asctime)s.%(msecs)03d|%(levelname)s|%(threadName)s|%(funcName)s()|%(message)s',
                                    '%d/%m/%Y %H:%M:%S')
